@@ -1,0 +1,23 @@
+server:
+  port: 8080
+logging:
+  level:
+    ROOT: info
+    com.github.novicezk.midjourney: debug
+    com.unfbx.chatgpt.interceptor: off
+    org.jooq.Constants: off
+knife4j:
+  enable: true
+  openapi:
+    title: Midjourney Proxy API文档
+    description: 代理 MidJourney 的discord频道，实现api形式调用AI绘图
+    concat:
+    url: /
+    version: v3.7.5
+    terms-of-service-url: /
+    group:
+      api:
+        group-name: API
+        api-rule: package
+        api-rule-resources:
+          - com.github.novicezk.midjourney.controller

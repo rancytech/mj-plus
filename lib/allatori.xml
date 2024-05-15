@@ -1,0 +1,39 @@
+<config>
+    <input>
+        <!-- in表示输出的原始jar包，out表示输出的混淆后的jar包，后者名称可自定义，也可以是war -->
+        <jar in="midjourney-rancy-3.7.5.jar" out="midjourney-rancy-3.7.5-confusion.jar"/>
+    </input>
+    <keep-names>
+        <class access="public">
+            <field access="public"/>
+            <method access="public"/>
+        </class>
+        <!-- 视图层的方法参数名称不做混淆，否则传参会对应不上，不怕麻烦的也可以加@RequestParam指定入参名称 -->
+        <class template="class *Controller">
+            <method template="private+ *(**)" parameters="keep"/>
+        </class>
+    </keep-names>
+    <property name="classes-naming" value="abc"/>
+    <property name="log-file" value="log.xml"/>
+    <!-- 忽略的包或类，这些文件将不被混淆 -->
+    <ignore-classes>
+        <class template="class *springframework*"/>
+        <!-- 排除业务类 -->
+        <class template="class spring.config.*"/>
+        <class template="class com.github.novicezk.midjourney.domain.*"/>
+        <class template="class com.github.novicezk.midjourney.dto.*"/>
+        <class template="class com.github.novicezk.midjourney.enums.*"/>
+        <class template="class com.github.novicezk.midjourney.result.*"/>
+        <class template="class com.github.novicezk.midjourney.support.MessageButton"/>
+        <class template="class com.github.novicezk.midjourney.support.MessageSelector"/>
+        <class template="class com.github.novicezk.midjourney.Constants"/>
+        <class template="class com.github.novicezk.midjourney.ReturnCode"/>
+        <class template="class com.github.novicezk.midjourney.ProxyProperties"/>
+        <class template="class com.github.novicezk.midjourney.ProxyProperties*"/>
+        <class template="class com.github.novicezk.midjourney.ProxyApplication"/>
+    </ignore-classes>
+    <!-- 随机命名混淆字符-->
+    <property name="random-seed" value="enable"/>
+    <!-- 接口形参名保持不变 -->
+    <property name="local-variables-naming" value="keep-parameters"/>
+</config>

@@ -1,0 +1,71 @@
+mj:
+  # 后台管理登录的用户名
+  username: "admin"
+  # 后台管理登录的密码
+  password: "admin"
+  # 账号存储方式，默认in_memory(内存\重启后丢失)，可选redis、mysql
+  account-store-type: in_memory
+  # 账号选择策略：默认 BestWaitIdleRule(最少等待空闲)、RoundRobinRule(轮循)
+  account-choose-rule: "BestWaitIdleRule"
+  # discord账号信息同步cron表达式，每天20:30执行一次，设置为0关闭此定时任务
+  account-sync-cron: "0 30 20 * * ?"
+  # 接口密钥，为空不启用鉴权；调用接口时需要加请求头 mj-api-secret
+  api-secret: ""
+  task-store:
+    # 任务存储方式，默认in_memory(内存\重启后丢失)，可选redis、mysql
+    type: in_memory
+    # 任务存储过期时间，过期后删除，默认30天
+    timeout: 30d
+  # 中文prompt翻译成英文的方式，可选null(默认)、baidu、gpt、deepl
+  translate-way: null
+  # describe、shorten等结果转中文的方式，可选null(默认)、baidu、gpt、deepl
+  translate-zh-way: null
+  # 选择百度翻译时，需要配置该项
+  baidu-translate:
+    # 百度翻译的appid
+    appid: ""
+    # 百度翻译的app-secret
+    app-secret: ""
+  # 选择gpt翻译时，需要配置该项
+  openai:
+    # 自定义gpt的接口地址，默认不需要配置
+    gpt-api-url: "https://api.openai.com"
+    # gpt的api-key
+    gpt-api-key: ""
+    # openai调用的超时时间，默认30秒
+    timeout: 30s
+    # openai的模型，默认gpt-3.5-turbo
+    model: "gpt-3.5-turbo"
+    # 返回结果的最大分词数，默认2048
+    maxTokens: 2048
+    # 相似度(0-2.0)，默认0
+    temperature: 0
+  # 选择deepl翻译时，需要配置该项
+  deepl-translate:
+    auth-key: ""
+  # 反向代理配置，用于解决国内无法访问discord的问题，国外服务器不需要修改
+  ng-discord:
+    server: "https://discord.com"
+    # cdn配置，配置后可以解决国内用户图片无法加载的问题
+    cdn: "https://cdn.discordapp.com"
+  # 任务错误原因转换，默认使用mj提供的英文描述
+  error-desc:
+    - en: "against our community standards"
+      zh: "可能包含违规信息"
+    - en: "Request cancelled due to image filters"
+      zh: "图片可能违规"
+# redis和mysql配置，如果account-store-type和task-store-type为redis或mysql，需要配置该项
+spring:
+  # redis配置
+  redis:
+    # redis的host，使用docker安装的话，一般都是这个，可以通过ip addr查看
+    host: 172.17.0.1
+    port: 6379
+    password: 123456
+  # mysql配置，需要mysql8.0以上版本
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # mj_proxy数据库需要自己手动创建
+    url: jdbc:mysql://172.17.0.1:3306/mj_proxy?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false
+    user: root
+    password: 123456
